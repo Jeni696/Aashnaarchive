@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--black:#0d0a0c;--black2:#161114;--lav:#b8acd0;--lav-deep:#8f7fb3;--rose:#c48689;--cream:#f7eee9;--maroon:#4a1f29;--maroon-deep:#381721;--wax:#7c1f1f;--wax-deep:#571414;--paper:#efe9df;--gold:#caa14b;--gold-lt:#f4d58d;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:radial-gradient(ellipse at top,var(--black2),var(--black) 70%);color:var(--cream);font-family:'Quicksand',sans-serif;overflow-x:hidden;min-height:100vh;}
+body.locked{overflow:hidden;height:100vh;}
+
+/* BOOK */
+#book-gate{position:fixed;inset:0;z-index:999;background:radial-gradient(ellipse at center,#1c1620,var(--black) 80%);display:flex;align-items:center;justify-content:center;transition:opacity 1s ease,visibility 1s ease;}
+#book-gate.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+.book-scene{text-align:center;}
+.book-hint{margin-top:1.8rem;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--lav);opacity:.8;}
+.book{width:min(420px,80vw);height:min(560px,64vh);position:relative;perspective:2200px;margin:0 auto;cursor:pointer;}
+.book .pages{position:absolute;inset:0;background:linear-gradient(135deg,var(--paper),#e3dccf);border-radius:4px 14px 14px 4px;box-shadow:inset 0 0 30px rgba(0,0,0,.16),10px 8px 28px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;text-align:center;padding:2.4rem;}
+.book .pages p{font-family:'Cormorant Garamond',serif;font-style:italic;color:#3a2c34;font-size:1.1rem;line-height:1.8;}
+.book .binding{position:absolute;left:0;top:3%;bottom:3%;width:10px;background:linear-gradient(90deg,var(--maroon-deep),var(--maroon));border-radius:4px 0 0 4px;z-index:6;}
+.book .cover{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;transition:transform 1.6s cubic-bezier(.6,0,.2,1);border-radius:4px 14px 14px 4px;box-shadow:10px 8px 28px rgba(0,0,0,.5);z-index:5;}
+.book.open .cover{transform:rotateY(-172deg);}
+.book .cover-face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;border-radius:4px 14px 14px 4px;display:flex;align-items:center;justify-content:center;}
+.book .cover-face.front{background:linear-gradient(150deg,var(--maroon),var(--maroon-deep));}
+.book .cover-face.back{background:linear-gradient(150deg,var(--maroon-deep),var(--maroon));transform:rotateY(180deg);}
+.book .elastic{position:absolute;right:34px;top:0;bottom:0;width:7px;background:linear-gradient(180deg,var(--gold),#8c6c2c 50%,var(--gold));opacity:.55;border-radius:3px;}
+.pearl-swirl{position:absolute;width:30%;height:30%;opacity:.95;}
+.pearl-swirl.tl{top:6%;left:6%;}
+.pearl-swirl.br{bottom:6%;right:10%;transform:rotate(180deg);}
+.title-on-cover-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+.title-on-cover{font-family:'Great Vibes',cursive;font-size:clamp(2.1rem,7vw,3.1rem);line-height:1.25;text-align:center;background:linear-gradient(135deg,var(--gold-lt) 10%,var(--gold) 50%,#f4e2b0 90%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 1.5rem;}
+
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.star{position:absolute;background:var(--lav);border-radius:50%;opacity:.5;animation:twinkle 4s infinite ease-in-out;}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(.8);}50%{opacity:.8;transform:scale(1.15);}}
+.petal{position:fixed;top:-30px;font-size:1rem;opacity:.55;pointer-events:none;z-index:0;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(0) rotate(0deg);opacity:0;}10%{opacity:.6;}90%{opacity:.4;}100%{transform:translateY(110vh) rotate(200deg);opacity:0;}}
+section{position:relative;z-index:1;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;}
+.hero .eyebrow{letter-spacing:.35em;text-transform:uppercase;font-size:.7rem;color:var(--rose);margin-bottom:1.5rem;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-style:italic;font-size:clamp(2.6rem,8vw,5.5rem);line-height:1.05;background:linear-gradient(135deg,var(--cream),var(--rose) 45%,var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1.2rem;}
+.hero p.sub{max-width:480px;color:var(--lav);font-size:1.05rem;line-height:1.7;opacity:.9;}
+.scroll-hint{margin-top:3.5rem;font-size:.75rem;letter-spacing:.2em;color:var(--rose);text-transform:uppercase;opacity:.85;display:flex;flex-direction:column;align-items:center;gap:.5rem;}
+.scroll-hint .line{width:1px;height:34px;background:linear-gradient(var(--rose),transparent);animation:drop 1.8s infinite ease-in-out;}
+@keyframes drop{0%{opacity:.2;}50%{opacity:1;}100%{opacity:.2;}}
+
+/* WELCOME */
+.welcome-wrap{max-width:640px;margin:0 auto;padding:3rem 1.6rem 5rem;}
+.welcome-wrap .eyebrow{display:block;text-align:center;letter-spacing:.35em;text-transform:uppercase;font-size:.7rem;color:var(--rose);margin-bottom:1.6rem;}
+.welcome-card{border:1px solid rgba(184,172,208,.22);border-radius:22px;padding:3rem 2.4rem;background:linear-gradient(160deg,rgba(184,172,208,.07),rgba(0,0,0,.18));backdrop-filter:blur(6px);position:relative;}
+.welcome-card::before{content:'✨';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:1.4rem;background:var(--black);padding:0 .6rem;}
+.welcome-h2{font-family:'Great Vibes',cursive;font-size:clamp(2rem,6vw,3rem);background:linear-gradient(135deg,var(--gold-lt),var(--gold),#f4e2b0);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1.2rem;line-height:1.3;display:block;}
+.welcome-card p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.12rem;line-height:1.9;color:var(--cream);opacity:.95;margin-bottom:1rem;}
+.steps{display:flex;flex-direction:column;gap:.8rem;margin:1.6rem 0;}
+.step{display:flex;align-items:flex-start;gap:.9rem;background:rgba(184,172,208,.06);border:1px solid rgba(184,172,208,.15);border-radius:12px;padding:.9rem 1rem;}
+.step-num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;color:var(--gold);flex-shrink:0;line-height:1;}
+.step .txt{font-size:.9rem;color:var(--lav);line-height:1.6;}
+.step .txt b{color:var(--cream);}
+
+/* ENVELOPE */
+.secret-section{min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 1.5rem;text-align:center;}
+.secret-section .eyebrow{letter-spacing:.35em;text-transform:uppercase;font-size:.7rem;color:var(--rose);margin-bottom:1rem;}
+.secret-section h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(1.8rem,5vw,2.6rem);margin-bottom:.6rem;color:var(--cream);}
+.secret-section .lock-label{font-size:.8rem;color:var(--lav);opacity:.8;margin-bottom:2.4rem;}
+.envelope{width:min(420px,88vw);height:min(290px,50vh);position:relative;cursor:pointer;margin-bottom:1.6rem;perspective:1300px;}
+.envelope .back{position:absolute;inset:0;background:linear-gradient(160deg,var(--paper),#e6ddcf);border-radius:6px;box-shadow:0 16px 36px rgba(0,0,0,.45);z-index:1;}
+.envelope .letter-peek{position:absolute;left:7%;right:7%;top:9%;height:80%;background:linear-gradient(160deg,#fffaf2,#f3ecdf);border-radius:4px;box-shadow:0 3px 10px rgba(0,0,0,.18);z-index:2;transform:translateY(0);transition:transform 1s cubic-bezier(.6,0,.2,1);display:flex;align-items:flex-start;justify-content:center;padding:14% 8% 6%;overflow:hidden;text-align:left;}
+.envelope.open .letter-peek{transform:translateY(-58%);}
+.envelope .letter-peek .letter-text{font-family:'Cormorant Garamond',serif;font-style:italic;color:#5c4636;font-size:clamp(.78rem,1.6vw,.98rem);line-height:1.75;}
+.envelope .cover{position:absolute;inset:0;transform-origin:top center;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.6,0,.2,1);z-index:4;border-radius:6px;}
+.envelope.open .cover{transform:rotateX(-165deg);z-index:1;}
+.envelope .cover-face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;border-radius:6px;}
+.envelope .cover-face.front{background:linear-gradient(160deg,#efe6d8,#ddd2bd);}
+.envelope .cover-face.back{background:linear-gradient(160deg,#ddd2bd,#efe6d8);transform:rotateX(180deg);}
+.envelope .seal{position:absolute;top:43%;left:50%;transform:translate(-50%,-50%) rotate(-4deg);width:58px;height:58px;border-radius:48% 52% 50% 50%;background:radial-gradient(circle at 32% 28%,var(--wax),var(--wax-deep) 75%);box-shadow:0 4px 8px rgba(0,0,0,.45),inset 0 0 6px rgba(0,0,0,.3);z-index:6;display:flex;align-items:center;justify-content:center;transition:opacity .4s,transform .4s;}
+.envelope .seal::before{content:'🌸';font-size:1.3rem;filter:grayscale(.3) brightness(1.3);opacity:.85;}
+.envelope.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.6) rotate(30deg);}
+.envelope .label{position:absolute;bottom:13px;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;color:#4a3a30;font-size:.95rem;z-index:7;pointer-events:none;}
+.keypad-wrap{display:flex;flex-direction:column;align-items:center;gap:1.2rem;margin-top:1.8rem;}
+.pin-dots{display:flex;gap:14px;}
+.pin-dots .dot{width:14px;height:14px;border-radius:50%;border:1px solid var(--rose);background:transparent;transition:background .2s,transform .2s;}
+.pin-dots .dot.filled{background:var(--rose);transform:scale(1.15);}
+.pin-dots.shake{animation:shakeX .4s ease;}
+@keyframes shakeX{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+.keypad-grid{display:grid;grid-template-columns:repeat(3,62px);gap:12px;justify-content:center;}
+.keypad-grid button{width:62px;height:62px;border-radius:50%;border:1px solid rgba(184,172,208,.3);background:rgba(184,172,208,.07);color:var(--cream);font-size:1.25rem;font-family:'Quicksand';cursor:pointer;transition:background .2s,transform .12s;}
+.keypad-grid button:hover{background:rgba(196,134,137,.18);border-color:var(--rose);}
+.keypad-grid button:active{transform:scale(.9);}
+.keypad-grid button.fn{font-size:.85rem;}
+.code-error{font-size:.78rem;color:#e08a8a;min-height:1.1rem;opacity:0;transition:opacity .3s;}
+.code-error.show{opacity:1;}
+.wrong-counter-hint{font-size:.72rem;color:rgba(184,172,208,.4);margin-top:.4rem;min-height:1rem;letter-spacing:.05em;}
+
+/* MODAL */
+.modal-screen{position:fixed;inset:0;z-index:300;background:rgba(8,6,8,.93);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.6rem;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s;}
+.modal-screen.active{opacity:1;visibility:visible;}
+.modal-card{max-width:720px;width:100%;max-height:90vh;overflow-y:auto;background:linear-gradient(160deg,rgba(184,172,208,.1),rgba(0,0,0,.35));border:1px solid rgba(184,172,208,.28);border-radius:20px;padding:2.4rem 2rem;position:relative;}
+.modal-card h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;color:var(--rose);font-size:1.6rem;margin-bottom:1.1rem;text-align:center;}
+.modal-card p{color:var(--cream);line-height:1.85;font-size:.98rem;margin-bottom:1.2rem;}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;color:var(--lav);font-size:1.6rem;cursor:pointer;line-height:1;opacity:.7;}
+.modal-close:hover{opacity:1;color:var(--rose);}
+.modal-hint{text-align:center;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lav);opacity:.55;margin-top:1.8rem;}
+
+/* GOLDEN TICKET */
+.ticket-claim-wrap{text-align:center;margin:1.6rem 0 .4rem;}
+.golden-ticket-btn{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.8rem;border-radius:999px;border:2px solid var(--gold);cursor:pointer;background:linear-gradient(135deg,var(--gold-lt),var(--gold) 55%,#f4e2b0);color:#3a2c10;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;font-weight:600;box-shadow:0 6px 18px rgba(202,161,75,.35);transition:transform .2s;}
+.golden-ticket-btn:hover{transform:translateY(-2px);}
+.golden-ticket-btn.claimed{opacity:.6;cursor:default;}
+.ticket-icon{font-size:1.4rem;}
+.ticket-claimed-msg{margin-top:.9rem;font-size:.8rem;color:var(--rose);opacity:0;max-height:0;overflow:hidden;transition:opacity .5s,max-height .5s;}
+.ticket-claimed-msg.show{opacity:1;max-height:60px;}
+
+/* CONFETTI */
+#confettiLayer{position:fixed;inset:0;pointer-events:none;z-index:500;overflow:hidden;}
+.confetti-piece{position:absolute;top:-20px;width:9px;height:14px;opacity:.95;animation:confettiFall linear forwards;}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(540deg);opacity:.3;}}
+
+/* ITEMS BAR */
+.items-bar{position:fixed;top:14px;right:14px;z-index:60;background:rgba(13,10,12,.55);border:1px solid rgba(184,172,208,.25);border-radius:999px;padding:.45rem .9rem;display:flex;align-items:center;gap:.55rem;backdrop-filter:blur(6px);}
+.items-bar-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lav);opacity:.75;}
+.items-bar-slots{display:flex;gap:.4rem;align-items:center;}
+.item-icon{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(202,161,75,.18);border:1px solid rgba(202,161,75,.4);font-size:.95rem;}
+.items-bar-empty{font-size:.68rem;color:var(--lav);opacity:.5;font-family:'Cormorant Garamond',serif;font-style:italic;}
+@media(max-width:480px){.items-bar{top:auto;bottom:14px;right:14px;}}
+
+/* BUTTONS */
+.buttons-section{max-width:760px;margin:0 auto;padding:1rem 1.5rem 2rem;text-align:center;}
+.buttons-section .eyebrow{letter-spacing:.35em;text-transform:uppercase;font-size:.7rem;color:var(--rose);margin-bottom:1rem;display:block;}
+.buttons-section h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(1.8rem,5vw,2.6rem);color:var(--cream);margin-bottom:.6rem;}
+.button-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2rem;}
+.button-grid button{padding:1.6rem 1rem;border-radius:16px;border:1px solid rgba(184,172,208,.3);background:linear-gradient(160deg,rgba(184,172,208,.07),rgba(0,0,0,.2));color:var(--cream);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;cursor:pointer;transition:transform .25s,border-color .25s;}
+.button-grid button:hover{transform:translateY(-4px);border-color:var(--rose);}
+.button-grid button .icon{display:block;font-size:1.8rem;margin-bottom:.4rem;}
+@media(max-width:480px){.button-grid{grid-template-columns:1fr 1fr;}}
+
+/* PUZZLE TWO BUTTON */
+.puzzle-two-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem 5rem;position:relative;z-index:1;}
+.puzzle-two-wrap .eyebrow{letter-spacing:.35em;text-transform:uppercase;font-size:.7rem;color:var(--rose);margin-bottom:1.4rem;display:block;}
+.puzzle-two-btn{position:relative;padding:1.4rem 3.5rem;border-radius:999px;border:none;cursor:pointer;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(1.4rem,4vw,2.2rem);letter-spacing:.06em;background:linear-gradient(90deg,#f4d58d 0%,var(--gold) 25%,#fff5cc 50%,var(--gold) 75%,#f4d58d 100%);background-size:300% 100%;color:#2a1a00;box-shadow:0 0 30px rgba(202,161,75,.55),0 0 60px rgba(202,161,75,.3),0 8px 24px rgba(0,0,0,.4);animation:glitterBtn 2.5s ease infinite;transition:transform .2s,box-shadow .2s;overflow:hidden;}
+.puzzle-two-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);background-size:200% 100%;animation:shimmer 2s ease infinite;border-radius:999px;}
+.puzzle-two-btn:hover{transform:scale(1.05);}
+@keyframes glitterBtn{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.sparkle{position:absolute;pointer-events:none;font-size:1.1rem;animation:sparklePop .6s ease forwards;}
+@keyframes sparklePop{0%{opacity:1;transform:scale(.5) translateY(0);}100%{opacity:0;transform:scale(1.4) translateY(-28px);}}
+
+/* COUNTER */
+.counter-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.4rem;}
+.counter-grid .box{background:rgba(184,172,208,.08);border-radius:14px;padding:1.2rem;text-align:center;}
+.counter-grid .num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;color:var(--rose);}
+.counter-grid .lbl{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--lav);margin-top:.3rem;}
+.counter-seconds{margin-top:1.8rem;font-size:.85rem;color:var(--lav);text-align:center;}
+.counter-seconds b{color:var(--cream);font-size:1.15rem;}
+
+/* BUCKET */
+.bucket-progress{text-align:center;margin-bottom:1.2rem;color:var(--rose);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;}
+.bucket-list{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.bucket-list li{display:flex;align-items:center;gap:.7rem;background:rgba(184,172,208,.07);padding:.6rem .9rem;border-radius:10px;border:1px solid rgba(184,172,208,.12);}
+.bucket-list li.done{background:rgba(196,134,137,.1);}
+.bucket-list li.done span.txt{text-decoration:line-through;opacity:.55;}
+.bucket-list li .num{font-size:.72rem;color:var(--lav);opacity:.6;width:24px;flex-shrink:0;}
+.bucket-list li .check{width:20px;height:20px;border-radius:50%;border:1px solid var(--rose);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--rose);}
+.bucket-list li.done .check{background:var(--rose);color:var(--black);}
+.bucket-list li span.txt{flex:1;font-family:'Quicksand';font-size:.88rem;text-align:left;}
+
+/* REDEEM */
+.redeem-box{text-align:center;}
+.redeem-box .ticket-display{font-size:3rem;margin-bottom:1rem;}
+.redeem-btn{padding:.85rem 2.2rem;border-radius:999px;border:1px solid var(--rose);background:transparent;color:var(--rose);font-family:'Quicksand';font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem;cursor:pointer;margin-top:.6rem;}
+.redeem-btn:hover{background:var(--rose);color:var(--black);}
+.redeem-btn:disabled{opacity:.35;cursor:not-allowed;}
+.redeem-success{margin-top:1.4rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--rose);opacity:0;max-height:0;overflow:hidden;transition:opacity .6s,max-height .6s;}
+.redeem-success.show{opacity:1;max-height:100px;}
+
+/* MAZE */
+.maze-wrapper{display:flex;flex-direction:column;align-items:center;gap:1rem;}
+.maze-legend{display:flex;gap:1rem;font-size:.78rem;color:var(--lav);flex-wrap:wrap;justify-content:center;}
+#mazeCanvas{border-radius:10px;border:2px solid rgba(184,172,208,.25);display:block;max-width:100%;}
+.maze-dpad{display:flex;flex-direction:column;align-items:center;gap:.4rem;margin-top:.6rem;}
+.maze-dpad .drow{display:flex;gap:.4rem;}
+.maze-dpad button{width:52px;height:52px;border-radius:10px;border:1px solid rgba(184,172,208,.3);background:rgba(184,172,208,.08);color:var(--cream);font-size:1.3rem;cursor:pointer;transition:background .15s,transform .1s;}
+.maze-dpad button:hover{background:rgba(196,134,137,.2);border-color:var(--rose);}
+.maze-dpad button:active{transform:scale(.88);}
+.maze-status{min-height:1.4rem;font-size:.88rem;text-align:center;color:var(--lav);font-family:'Cormorant Garamond',serif;font-style:italic;}
+.maze-status.bad{color:#e08a8a;}
+.maze-status.good{color:var(--rose);}
+.maze-win{text-align:center;padding:1rem;}
+.maze-win .big-num{font-family:'Great Vibes',cursive;font-size:7rem;line-height:1;background:linear-gradient(135deg,var(--gold-lt),var(--gold),#f4e2b0);-webkit-background-clip:text;background-clip:text;color:transparent;margin:1rem 0;display:block;}
+.maze-win p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--cream);margin-bottom:1.4rem;}
+.clue2-btn-open{margin-top:1rem;padding:1rem 2.4rem;border-radius:999px;border:2px solid var(--lav-deep);background:linear-gradient(135deg,rgba(143,127,179,.25),rgba(184,172,208,.12));color:var(--cream);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 16px rgba(143,127,179,.3);}
+.clue2-btn-open:hover{transform:translateY(-3px);}
+
+/* TASK CARDS */
+.task-card{border:1px solid rgba(184,172,208,.2);border-radius:18px;padding:1.6rem;margin-bottom:1.2rem;background:linear-gradient(160deg,rgba(184,172,208,.06),rgba(0,0,0,.18));transition:opacity .4s;position:relative;}
+.task-card.locked{opacity:.3;pointer-events:none;}
+.task-card.completed{border-color:rgba(109,187,138,.4);}
+.task-badge{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rose);margin-bottom:.7rem;}
+.task-emoji-big{font-size:2.4rem;display:block;text-align:center;margin-bottom:.7rem;}
+.task-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--cream);margin-bottom:.8rem;text-align:center;}
+.task-rules{background:rgba(0,0,0,.25);border-radius:10px;padding:.8rem 1rem;margin-bottom:1rem;border-left:3px solid var(--gold);}
+.task-rule{font-size:.82rem;color:var(--lav);margin-bottom:.35rem;line-height:1.5;}
+.task-rule:last-child{margin-bottom:0;}
+.task-rule b{color:var(--gold);}
+.task-confirm-btn{display:block;width:100%;padding:.85rem 1rem;border-radius:12px;border:1px solid rgba(196,134,137,.5);background:rgba(196,134,137,.1);color:var(--cream);font-family:'Quicksand';font-size:.88rem;cursor:pointer;transition:background .2s;margin-top:.9rem;}
+.task-confirm-btn:hover:not(:disabled){background:rgba(196,134,137,.25);}
+.task-confirm-btn:disabled{opacity:.35;cursor:not-allowed;}
+.task-done-label{text-align:center;margin-top:.8rem;color:#6dbb8a;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;}
+.task-lock-icon{position:absolute;top:1rem;right:1.2rem;font-size:1.3rem;opacity:.45;}
+.clue2-complete{text-align:center;padding:2rem;display:none;}
+.clue2-complete .big-check{font-size:3.5rem;display:block;margin-bottom:1rem;}
+.clue2-complete p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--rose);line-height:1.8;}
+
+/* TIMER (shared by all tasks) */
+.task-timer-wrap{display:flex;flex-direction:column;align-items:center;gap:.9rem;margin:1rem 0;}
+.timer-ring-wrap{position:relative;width:110px;height:110px;}
+.timer-ring{width:110px;height:110px;}
+.timer-countdown{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--rose);line-height:1;text-align:center;}
+.timer-start-btn{padding:.7rem 1.6rem;border-radius:999px;border:1px solid var(--lav-deep);background:transparent;color:var(--cream);font-family:'Quicksand';font-size:.82rem;cursor:pointer;transition:background .2s;}
+.timer-start-btn:hover:not(:disabled){background:rgba(184,172,208,.15);}
+.timer-start-btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* PUSHUP COUNTER */
+.pushup-wrap{display:flex;flex-direction:column;align-items:center;gap:.8rem;margin:1rem 0;}
+.pushup-display{display:flex;align-items:baseline;gap:.4rem;}
+.pushup-num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:3.5rem;color:var(--rose);line-height:1;}
+.pushup-total{font-size:1.2rem;color:var(--lav);}
+.pushup-tap-btn{font-size:1.8rem;padding:.8rem 2rem;border-radius:14px;border:2px solid rgba(196,134,137,.5);background:rgba(196,134,137,.12);cursor:pointer;transition:transform .1s,background .15s;color:var(--cream);}
+.pushup-tap-btn:active{transform:scale(.9);}
+.pushup-tap-btn:hover:not(:disabled){background:rgba(196,134,137,.25);}
+.pushup-tap-btn:disabled{opacity:.4;cursor:not-allowed;}
+.pushup-bar-wrap{width:100%;max-width:200px;height:8px;border-radius:999px;background:rgba(184,172,208,.15);overflow:hidden;}
+.pushup-bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--rose),var(--gold));transition:width .15s ease;}
+
+/* QUIZ */
+.q3-prog-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;}
+.q3-prog-label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);}
+.q3-score-label{font-size:.72rem;color:var(--lav);}
+.q3-bar-wrap{width:100%;height:6px;border-radius:999px;background:rgba(184,172,208,.15);margin-bottom:1.4rem;overflow:hidden;}
+.q3-bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--rose),var(--lav));transition:width .4s ease;}
+.q3-q-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--cream);margin-bottom:1.2rem;line-height:1.65;}
+.q3-opts{display:flex;flex-direction:column;gap:.55rem;}
+.q3-opt{padding:.8rem 1rem;border-radius:12px;border:1px solid rgba(184,172,208,.2);background:rgba(184,172,208,.05);color:var(--lav);font-family:'Quicksand';font-size:.9rem;cursor:pointer;text-align:left;transition:border-color .15s,background .15s;}
+.q3-opt:hover:not(:disabled){border-color:var(--rose);background:rgba(196,134,137,.1);}
+.q3-opt.correct{border-color:#6dbb8a!important;background:rgba(109,187,138,.12)!important;color:#a8eec4!important;}
+.q3-opt.wrong{border-color:#e08a8a!important;background:rgba(224,138,138,.12)!important;color:#e08a8a!important;}
+.q3-opt:disabled{cursor:default;}
+.q3-feedback{min-height:1.4rem;font-size:.88rem;margin-top:.9rem;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;}
+.q3-feedback.good{color:#6dbb8a;}
+.q3-feedback.bad{color:#e08a8a;}
+.q3-next-btn{display:block;margin:1.2rem auto 0;padding:.8rem 2rem;border-radius:999px;border:1px solid var(--rose);background:transparent;color:var(--rose);font-family:'Quicksand';font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem;cursor:pointer;}
+.q3-next-btn:hover{background:var(--rose);color:var(--black);}
+.q3-results{text-align:center;}
+.q3-score-big{font-family:'Great Vibes',cursive;font-size:4rem;background:linear-gradient(135deg,var(--gold-lt),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;margin:1rem 0;display:block;}
+.q3-code-reveal{margin:1.4rem auto;max-width:420px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--cream);line-height:1.8;}
+.q3-code{font-family:'Quicksand';font-weight:700;font-size:2.5rem;font-style:normal;background:linear-gradient(135deg,var(--gold-lt),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin-top:.5rem;letter-spacing:.2em;}
+.q3-wrong-list{text-align:left;margin:1rem 0;}
+.q3-wrong-item{font-size:.82rem;color:var(--lav);margin-bottom:.5rem;line-height:1.5;padding:.5rem .7rem;background:rgba(184,172,208,.06);border-radius:8px;}
+.q3-wrong-item b{color:#6dbb8a;}
+.q3-retry-btn{margin-top:1.2rem;padding:.8rem 2rem;border-radius:999px;border:1px solid var(--lav-deep);background:transparent;color:var(--lav);font-family:'Quicksand';font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem;cursor:pointer;}
+.q3-intro-txt{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--lav);text-align:center;line-height:1.8;margin-bottom:1.4rem;}
+.q3-start-btn{display:block;margin:0 auto;padding:.9rem 2.4rem;border-radius:999px;border:1px solid var(--rose);background:transparent;color:var(--rose);font-family:'Quicksand';font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.75rem;cursor:pointer;}
+.q3-start-btn:hover{background:var(--rose);color:var(--black);}
+
+/* PLATINUM */
+.plat-wrap{text-align:center;}
+.plat-medal{font-size:4.5rem;display:block;margin-bottom:1rem;animation:medalFloat 2.5s ease-in-out infinite;}
+@keyframes medalFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.plat-title{font-family:'Great Vibes',cursive;font-size:2.8rem;background:linear-gradient(135deg,#e8e8e8 0%,#b0b0b0 40%,#ffffff 55%,#b0b0b0 70%,#a0a0a0 100%);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin-bottom:.8rem;}
+.plat-desc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--lav);line-height:1.8;margin-bottom:1.4rem;}
+.plat-claim-btn{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.8rem;border-radius:999px;border:2px solid #c0c0c0;cursor:pointer;background:linear-gradient(135deg,#e8e8e8,#c0c0c0 55%,#f0f0f0);color:#1a1a1a;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;font-weight:600;box-shadow:0 6px 18px rgba(192,192,192,.35);transition:transform .2s;}
+.plat-claim-btn:hover{transform:translateY(-2px);}
+.plat-claim-btn.claimed{opacity:.6;cursor:default;}
+
+/* CLUE 4 SECRET */
+.clue4-secret{text-align:center;padding:.5rem;}
+.clue4-secret .secret-icon{font-size:3.5rem;display:block;margin-bottom:1rem;animation:secretPulse 2s ease-in-out infinite;}
+@keyframes secretPulse{0%,100%{opacity:.6;transform:scale(1);}50%{opacity:1;transform:scale(1.08);}}
+.clue4-secret .secret-headline{font-family:'Great Vibes',cursive;font-size:2.4rem;background:linear-gradient(135deg,var(--rose),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin-bottom:1.2rem;line-height:1.3;}
+.clue4-secret .secret-body{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--lav);line-height:1.85;margin-bottom:1.2rem;}
+.clue4-secret .secret-code-hint{background:rgba(184,172,208,.08);border:1px solid rgba(184,172,208,.22);border-radius:14px;padding:1.1rem;margin-top:1rem;}
+.clue4-secret .secret-code-hint p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--cream);margin-bottom:.4rem;}
+.wrong-count-display{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);font-size:.68rem;color:rgba(184,172,208,.25);z-index:5;letter-spacing:.08em;pointer-events:none;}
+
+/* CLOSING */
+.closing{text-align:center;padding:5rem 1.5rem 7rem;max-width:640px;margin:0 auto;}
+.closing .eyebrow{letter-spacing:.35em;text-transform:uppercase;font-size:.7rem;color:var(--rose);margin-bottom:1rem;display:block;}
+.closing h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(1.8rem,5vw,2.8rem);margin-bottom:1.3rem;background:linear-gradient(135deg,var(--rose),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.closing p{color:var(--lav);line-height:1.8;font-size:1.02rem;margin-bottom:.6rem;}
+.signature{margin-top:2.2rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--cream);}
+</style>
+</head>
+<body class="locked">
+
+<!-- BOOK -->
+<div id="book-gate">
+  <div class="book-scene">
+    <div class="book" id="book">
+      <div class="pages"><p>Once upon a<br>love story...</p></div>
+      <div class="binding"></div>
+      <div class="cover">
+        <div class="cover-face front">
+          <svg class="pearl-swirl tl" viewBox="0 0 100 100"><g fill="#f3ecf6" opacity=".95"><circle cx="20" cy="14" r="3.2"/><circle cx="28" cy="11" r="2.6"/><circle cx="36" cy="10" r="2.2"/><circle cx="44" cy="11" r="2.6"/><circle cx="51" cy="15" r="3"/><circle cx="56" cy="21" r="2.4"/><circle cx="58" cy="29" r="2"/><circle cx="55" cy="36" r="2.6"/><circle cx="47" cy="38" r="3.4"/><circle cx="40" cy="34" r="2.2"/><circle cx="39" cy="27" r="1.8"/><circle cx="15" cy="22" r="2.4"/><circle cx="13" cy="31" r="2.8"/><circle cx="16" cy="40" r="2.2"/><circle cx="22" cy="47" r="3"/><circle cx="30" cy="50" r="2.4"/><circle cx="37" cy="49" r="2"/><circle cx="42" cy="45" r="1.8"/></g></svg>
+          <svg class="pearl-swirl br" viewBox="0 0 100 100"><g fill="#f3ecf6" opacity=".95"><circle cx="20" cy="14" r="3.2"/><circle cx="28" cy="11" r="2.6"/><circle cx="36" cy="10" r="2.2"/><circle cx="44" cy="11" r="2.6"/><circle cx="51" cy="15" r="3"/><circle cx="56" cy="21" r="2.4"/><circle cx="58" cy="29" r="2"/><circle cx="55" cy="36" r="2.6"/><circle cx="47" cy="38" r="3.4"/><circle cx="40" cy="34" r="2.2"/><circle cx="39" cy="27" r="1.8"/><circle cx="15" cy="22" r="2.4"/><circle cx="13" cy="31" r="2.8"/><circle cx="16" cy="40" r="2.2"/><circle cx="22" cy="47" r="3"/><circle cx="30" cy="50" r="2.4"/><circle cx="37" cy="49" r="2"/><circle cx="42" cy="45" r="1.8"/></g></svg>
+          <div class="elastic"></div>
+          <div class="title-on-cover-wrap"><div class="title-on-cover">My love<br>Aashna</div></div>
+        </div>
+        <div class="cover-face back"></div>
+      </div>
+    </div>
+    <div class="book-hint">tap the book to begin</div>
+  </div>
+</div>
+
+<div id="stars"></div>
+<div class="wrong-count-display" id="wrongCountDisplay"></div>
+
+<section class="hero">
+  <span class="eyebrow">she is back</span>
+  <h1>Welcome Back,<br>Aashna Ramola</h1>
+  <p class="sub">This website has been updated. And this time, the puzzle is going to be harder and better.</p>
+  <div class="scroll-hint"><span>scroll</span><span class="line"></span></div>
+</section>
+
+<section class="welcome-wrap">
+  <span class="eyebrow">before you begin</span>
+  <div class="welcome-card">
+    <span class="welcome-h2">HELLO, Welcome Back Aashna Ramola.</span>
+    <p>This website has been updated — and this time the puzzle is going to be harder and better. Read carefully before you start.</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">01</span><span class="txt">Press the big glittery <b>PUZZLE TWO</b> button below and guide Mitsu through the maze without being caught.</span></div>
+      <div class="step"><span class="step-num">02</span><span class="txt">Completing the maze unlocks <b>Clue 2</b> — four real-life video challenges you must send to Jenil one by one before moving on.</span></div>
+      <div class="step"><span class="step-num">03</span><span class="txt">A secret <b>Clue 3</b> quiz is hidden in the keypad. Find the code, get all questions right, and unlock your platinum prize code.</span></div>
+      <div class="step"><span class="step-num">04</span><span class="txt">There might be a hidden <b>Clue 4</b> somewhere too... keep your eyes open. 👀</span></div>
+    </div>
+    <p>Good luck. You are going to need it. 🌸</p>
+  </div>
+</section>
+
+<!-- ENVELOPE -->
+<section class="secret-section">
+  <span class="eyebrow">for your eyes only</span>
+  <h2>The Envelope</h2>
+  <span class="lock-label" id="lockLabel">tap the seal, then enter the code to open it</span>
+  <div class="envelope" id="envelope">
+    <div class="back"></div>
+    <div class="letter-peek"><div class="letter-text">I made this puzzle for you with multiple steps, each giving a hint of the password to win a prize. Complete the activities and enter the code to win.<br><br>Good luck, Aashna. — Jenil</div></div>
+    <div class="seal"></div>
+    <div class="cover"><div class="cover-face front"></div><div class="cover-face back"></div></div>
+    <div class="label">tap to break the seal</div>
+  </div>
+  <div class="keypad-wrap">
+    <div class="pin-dots" id="pinDots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="keypad-grid" id="keypadGrid">
+      <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button>
+      <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button>
+      <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button>
+      <button type="button" class="fn" data-key="clear">clr</button><button type="button" data-key="0">0</button><button type="button" class="fn" data-key="enter">✓</button>
+    </div>
+    <div class="code-error" id="codeError">not quite — try again 🌸</div>
+  </div>
+</section>
+
+<!-- CONGRATS MODAL -->
+<div class="modal-screen" id="letterModal">
+  <div class="modal-card">
+    <button class="modal-close" data-close="letterModal">×</button>
+    <h3>You Cracked It! 🌸</h3>
+    <p>Congratulations — you figured out the code! Here is your golden ticket. Show it to Jenil to claim your prize.</p>
+    <div class="ticket-claim-wrap">
+      <button class="golden-ticket-btn" id="claimTicketBtn" type="button"><span class="ticket-icon">🎫</span><span class="ticket-label">Claim Your Golden Ticket</span></button>
+      <div class="ticket-claimed-msg" id="ticketClaimedMsg">🎉 Added to your items — tap Redeem when ready!</div>
+    </div>
+    <div class="modal-hint">tap × or outside to close</div>
+  </div>
+</div>
+
+<!-- MAZE MODAL -->
+<div class="modal-screen" id="mazeModal">
+  <div class="modal-card">
+    <button class="modal-close" data-close="mazeModal" id="mazeCloseBtn">×</button>
+    <h3 id="mazeTitleH3">🐱 Guide Mitsu Through the Maze!</h3>
+    <div id="maze-game-stage">
+      <div class="maze-wrapper">
+        <div class="maze-legend"><span>🐱 Mitsu</span><span>👾 Monster</span><span>🎀 Goal</span></div>
+        <canvas id="mazeCanvas"></canvas>
+        <div class="maze-status" id="mazeStatus">Use arrows to move Mitsu to the 🎀 — avoid the monster 👾!</div>
+        <div class="maze-dpad">
+          <div class="drow"><button type="button" data-dir="up">↑</button></div>
+          <div class="drow"><button type="button" data-dir="left">←</button><button type="button" data-dir="down">↓</button><button type="button" data-dir="right">→</button></div>
+        </div>
+      </div>
+    </div>
+    <div id="maze-win-stage" style="display:none;">
+      <div class="maze-win">
+        <p>🎉 Mitsu made it! The monster never caught her!</p>
+        <p style="font-size:.88rem;color:var(--lav);margin-bottom:.3rem;letter-spacing:.05em;text-transform:uppercase;">✨ Digit 1 of your Platinum Ticket code ✨</p>
+        <span class="big-num">3</span>
+        <p>Write it down — you need all 4 digits to unlock the platinum prize. Three more to go.</p>
+        <button class="clue2-btn-open" id="clue2OpenBtn" type="button">✨ Clue 2 — Real Life Challenges ✨</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLUE 2 MODAL — 4 REAL LIFE TASKS -->
+<div class="modal-screen" id="clue2Modal">
+  <div class="modal-card">
+    <button class="modal-close" data-close="clue2Modal">×</button>
+    <h3>Clue 2 — Prove It 💪</h3>
+    <p style="text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--lav);font-size:.98rem;margin-bottom:1.2rem;">Four real challenges. Complete each one, send the proof to Jenil, then confirm below before moving on to the next.</p>
+
+    <!-- TASK 1: DANCE -->
+    <div class="task-card" id="t1Card">
+      <div class="task-badge">Task 1 of 4</div>
+      <span class="task-emoji-big">💃</span>
+      <div class="task-title">Send Jenil a Dance Video</div>
+      <div class="task-rules">
+        <div class="task-rule">⏱ Must be <b>at least 1 minute</b> long</div>
+        <div class="task-rule">🎵 Any song you want — make it fun</div>
+        <div class="task-rule">📱 Send to Jenil before tapping confirm</div>
+      </div>
+      <div class="task-timer-wrap">
+        <div class="timer-ring-wrap">
+          <svg class="timer-ring" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(184,172,208,0.15)" stroke-width="8"/>
+            <circle id="t1Ring" cx="50" cy="50" r="42" fill="none" stroke="var(--rose)" stroke-width="8" stroke-dasharray="263.9" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+          </svg>
+          <div class="timer-countdown" id="t1Count">1:00</div>
+        </div>
+        <button class="timer-start-btn" id="t1TimerBtn" type="button">Start 1 Min Timer</button>
+      </div>
+      <button class="task-confirm-btn" id="t1Btn" type="button" disabled>I have sent Jenil my dance video ✅</button>
+      <div class="task-done-label" id="t1Done" style="display:none;">✅ Dance video sent! Task 1 complete.</div>
+    </div>
+
+    <!-- TASK 2: PLANK -->
+    <div class="task-card locked" id="t2Card">
+      <div class="task-lock-icon" id="t2Lock">🔒</div>
+      <div class="task-badge">Task 2 of 4</div>
+      <span class="task-emoji-big">🏋️</span>
+      <div class="task-title">Send Jenil a Plank Video</div>
+      <div class="task-rules">
+        <div class="task-rule">⏱ Must hold the plank for <b>1 minute 30 seconds</b></div>
+        <div class="task-rule">📐 Body must be straight the whole time</div>
+        <div class="task-rule">📱 Record on camera and send to Jenil</div>
+      </div>
+      <div class="task-timer-wrap">
+        <div class="timer-ring-wrap">
+          <svg class="timer-ring" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(184,172,208,0.15)" stroke-width="8"/>
+            <circle id="t2Ring" cx="50" cy="50" r="42" fill="none" stroke="var(--rose)" stroke-width="8" stroke-dasharray="263.9" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+          </svg>
+          <div class="timer-countdown" id="t2Count">1:30</div>
+        </div>
+        <button class="timer-start-btn" id="t2TimerBtn" type="button" disabled>Start 1:30 Timer</button>
+      </div>
+      <button class="task-confirm-btn" id="t2Btn" type="button" disabled>I have sent Jenil my plank video ✅</button>
+      <div class="task-done-label" id="t2Done" style="display:none;">✅ Plank video sent! Task 2 complete.</div>
+    </div>
+
+    <!-- TASK 3: HANDSTAND -->
+    <div class="task-card locked" id="t3Card">
+      <div class="task-lock-icon" id="t3Lock">🔒</div>
+      <div class="task-badge">Task 3 of 4</div>
+      <span class="task-emoji-big">🤸</span>
+      <div class="task-title">Hold a Handstand for 4 Seconds</div>
+      <div class="task-rules">
+        <div class="task-rule">⏱ Must hold it for <b>4 full seconds</b></div>
+        <div class="task-rule">📹 Record the handstand on camera</div>
+        <div class="task-rule">📱 Send video to Jenil before confirming</div>
+      </div>
+      <div class="task-timer-wrap">
+        <div class="timer-ring-wrap">
+          <svg class="timer-ring" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(184,172,208,0.15)" stroke-width="8"/>
+            <circle id="t3Ring" cx="50" cy="50" r="42" fill="none" stroke="var(--rose)" stroke-width="8" stroke-dasharray="263.9" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+          </svg>
+          <div class="timer-countdown" id="t3Count">4</div>
+        </div>
+        <button class="timer-start-btn" id="t3TimerBtn" type="button" disabled>Start 4 Sec Timer</button>
+      </div>
+      <button class="task-confirm-btn" id="t3Btn" type="button" disabled>I have sent Jenil my handstand video ✅</button>
+      <div class="task-done-label" id="t3Done" style="display:none;">✅ Handstand video sent! Task 3 complete.</div>
+    </div>
+
+    <!-- TASK 4: PUSHUPS -->
+    <div class="task-card locked" id="t4Card">
+      <div class="task-lock-icon" id="t4Lock">🔒</div>
+      <div class="task-badge">Task 4 of 4</div>
+      <span class="task-emoji-big">💪</span>
+      <div class="task-title">Complete 15 Pushups on Camera</div>
+      <div class="task-rules">
+        <div class="task-rule">🔢 Must complete <b>15 full pushups</b></div>
+        <div class="task-rule">📐 Chest must touch (or almost touch) the floor each rep</div>
+        <div class="task-rule">📱 Record and send the video to Jenil. Use the counter below to track your reps!</div>
+      </div>
+      <div class="pushup-wrap">
+        <div class="pushup-display">
+          <span class="pushup-num" id="pushupNum">0</span>
+          <span class="pushup-total">/ 15</span>
+        </div>
+        <div class="pushup-bar-wrap"><div class="pushup-bar-fill" id="pushupBarFill" style="width:0%"></div></div>
+        <button class="pushup-tap-btn" id="pushupTapBtn" type="button" disabled>✊ TAP PER PUSHUP</button>
+      </div>
+      <button class="task-confirm-btn" id="t4Btn" type="button" disabled>I have sent Jenil my pushup video ✅</button>
+      <div class="task-done-label" id="t4Done" style="display:none;">✅ Pushup video sent! All tasks complete!</div>
+    </div>
+
+    <!-- ALL DONE -->
+    <div class="clue2-complete" id="clue2Complete">
+      <span class="big-check">🎉</span>
+      <p>All four tasks sent to Jenil! You absolutely smashed it. He is proud of you. 🌸</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;color:var(--lav);margin-bottom:.3rem;">✨ Digit 2 of your Platinum Ticket code ✨</p>
+      <span style="font-family:'Great Vibes',cursive;font-size:5rem;line-height:1;background:linear-gradient(135deg,var(--gold-lt),var(--gold),#f4e2b0);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin:.5rem 0;">4</span>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--lav);">You have: <b style="color:var(--cream);">3 _ _ _</b> → <b style="color:var(--cream);">3 4 _ _</b>. Keep going — two more clues left.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CLUE 3 QUIZ MODAL (keypad: 3333) -->
+<div class="modal-screen" id="clue3Modal">
+  <div class="modal-card">
+    <button class="modal-close" data-close="clue3Modal">×</button>
+    <h3>Clue 3 — The Jenil Quiz 🧠</h3>
+    <div id="q3-intro">
+      <p class="q3-intro-txt">15 questions. All about Jenil. Get every single one correct to unlock the code for your platinum ticket. One wrong answer and you start over.</p>
+      <button class="q3-start-btn" id="q3StartBtn" type="button">Begin Quiz →</button>
+    </div>
+    <div id="q3-question" style="display:none;">
+      <div class="q3-prog-row">
+        <span class="q3-prog-label">Question <span id="q3Num">1</span> of 15</span>
+        <span class="q3-score-label" id="q3ScoreLabel">0 correct</span>
+      </div>
+      <div class="q3-bar-wrap"><div class="q3-bar-fill" id="q3BarFill" style="width:0%"></div></div>
+      <div class="q3-q-text" id="q3QText"></div>
+      <div class="q3-opts" id="q3Opts"></div>
+      <div class="q3-feedback" id="q3Feedback"></div>
+      <button class="q3-next-btn" id="q3NextBtn" style="display:none;" type="button">Next →</button>
+    </div>
+    <div id="q3-results" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- PLATINUM TICKET MODAL (keypad: 3453) -->
+<div class="modal-screen" id="platModal">
+  <div class="modal-card">
+    <button class="modal-close" data-close="platModal">×</button>
+    <h3>Platinum Ticket 🏆</h3>
+    <div class="plat-wrap">
+      <span class="plat-medal">🏅</span>
+      <span class="plat-title">Platinum Ticket</span>
+      <p class="plat-desc">You solved the quiz AND found the code. Genuinely impressive. This platinum ticket earns you a special prize from Jenil — even better than the golden one. Show him this screen.</p>
+      <button class="plat-claim-btn" id="platClaimBtn" type="button"><span>🏆</span><span id="platClaimLabel">Claim Platinum Ticket</span></button>
+      <div id="platClaimedMsg" style="display:none;margin-top:.9rem;font-size:.8rem;color:var(--lav);">🎉 Platinum ticket claimed! Go find Jenil.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CLUE 4 SECRET (5 wrong attempts) -->
+<div class="modal-screen" id="clue4SecretModal">
+  <div class="modal-card">
+    <button class="modal-close" data-close="clue4SecretModal">×</button>
+    <div class="clue4-secret">
+      <span class="secret-icon">🔓</span>
+      <span class="secret-headline">You Found The Secret</span>
+      <p class="secret-body">They say that five wrongs make a right.<br>You proved that today. Most people give up. You kept going.<br><br>That stubbornness? That is exactly why I love you.</p>
+      <div class="secret-code-hint">
+        <p style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--lav);margin-bottom:.6rem;">✨ Digit 4 — The Final Number ✨</p>
+        <span style="font-family:'Great Vibes',cursive;font-size:4.5rem;line-height:1;background:linear-gradient(135deg,var(--gold-lt),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin:.5rem 0;">3</span>
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--lav);font-size:.95rem;margin:.6rem 0 0;">You now have all four digits: <b style="color:var(--cream);letter-spacing:.12em;font-size:1.1rem;">3 4 5 3</b><br>Go enter <b style="color:var(--gold);">3453</b> on the keypad to claim your Platinum Ticket. 🌸</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="confettiLayer"></div>
+
+<!-- ITEMS BAR -->
+<div class="items-bar" id="itemsBar">
+  <span class="items-bar-label">items</span>
+  <div class="items-bar-slots" id="itemsBarSlots"><div class="items-bar-empty">empty</div></div>
+</div>
+
+<!-- BUTTONS -->
+<section class="buttons-section">
+  <span class="eyebrow">a few more little things</span>
+  <h2>Just For You</h2>
+  <div class="button-grid">
+    <button id="btnCounter" type="button"><span class="icon">⏳</span>Days Together</button>
+    <button id="btnBucket" type="button"><span class="icon">📋</span>Our Bucket List</button>
+    <button id="btnRedeem" type="button"><span class="icon">🎫</span>Redeem</button>
+  </div>
+</section>
+
+<div class="puzzle-two-wrap">
+  <span class="eyebrow">the challenge awaits</span>
+  <button class="puzzle-two-btn" id="puzzleTwoBtn" type="button">✨ PUZZLE TWO ✨</button>
+</div>
+
+<!-- COUNTER MODAL -->
+<div class="modal-screen" id="counterScreen">
+  <div class="modal-card">
+    <button class="modal-close" data-close="counterScreen">×</button>
+    <h3>Days Together 💗</h3>
+    <div class="counter-grid">
+      <div class="box"><div class="num" id="cDays">0</div><div class="lbl">days</div></div>
+      <div class="box"><div class="num" id="cHours">0</div><div class="lbl">hours</div></div>
+      <div class="box"><div class="num" id="cMins">0</div><div class="lbl">minutes</div></div>
+      <div class="box"><div class="num" id="cSecs">0</div><div class="lbl">seconds</div></div>
+    </div>
+    <div class="counter-seconds">that is <b id="cTotalSecs">0</b> seconds together since Feb 25th 💗</div>
+  </div>
+</div>
+
+<!-- BUCKET LIST MODAL -->
+<div class="modal-screen" id="bucketScreen">
+  <div class="modal-card">
+    <button class="modal-close" data-close="bucketScreen">×</button>
+    <h3>Our Bucket List</h3>
+    <div class="bucket-progress" id="bucketProgress">0 / 100 checked off</div>
+    <ul class="bucket-list" id="bucketList"></ul>
+  </div>
+</div>
+
+<!-- REDEEM MODAL -->
+<div class="modal-screen" id="redeemScreen">
+  <div class="modal-card">
+    <button class="modal-close" data-close="redeemScreen">×</button>
+    <h3>Redeem Your Prize</h3>
+    <div class="redeem-box" id="redeemBox"></div>
+  </div>
+</div>
+
+<section class="closing">
+  <span class="eyebrow">and the story continues</span>
+  <h2>To Many More Galaxies of Memories</h2>
+  <p>Thank you for every laugh, every quiet evening, every little moment that somehow became my favourite.</p>
+  <p>I love you more than words or websites can ever really hold.</p>
+  <div class="signature">— forever yours 💫</div>
+</section>
+
+<script>
+/* STARS + PETALS */
+var st=document.getElementById('stars');
+for(var i=0;i<80;i++){var s=document.createElement('div');s.className='star';var sz=Math.random()*2+1;s.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+Math.random()*100+'vw;top:'+Math.random()*100+'vh;animation-delay:'+(Math.random()*4)+'s';st.appendChild(s);}
+['🌸','🌷'].forEach(function(sym){for(var i=0;i<7;i++){var p=document.createElement('div');p.className='petal';p.textContent=sym;p.style.cssText='left:'+Math.random()*100+'vw;animation-duration:'+(10+Math.random()*12)+'s;animation-delay:'+(Math.random()*12)+'s';document.body.appendChild(p);}});
+
+/* BOOK */
+var bookEl=document.getElementById('book'),gateEl=document.getElementById('book-gate');
+bookEl.addEventListener('click',function(){if(bookEl.classList.contains('open'))return;bookEl.classList.add('open');setTimeout(function(){gateEl.classList.add('hidden');document.body.classList.remove('locked');},1300);});
+
+/* MODAL HELPERS */
+function openModal(id){document.getElementById(id).classList.add('active');}
+function closeModal(id){document.getElementById(id).classList.remove('active');}
+document.querySelectorAll('.modal-screen').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('active');});});
+document.querySelectorAll('.modal-close').forEach(function(b){b.addEventListener('click',function(){closeModal(b.dataset.close||b.closest('.modal-screen').id);});});
+
+/* CONFETTI */
+var confettiLayer=document.getElementById('confettiLayer');
+var CC=['#caa14b','#f4d58d','#c48689','#b8acd0','#f7eee9','#fff'];
+function fireConfetti(){for(var i=0;i<90;i++){var p=document.createElement('div');p.className='confetti-piece';p.style.cssText='left:'+Math.random()*100+'vw;background:'+CC[Math.floor(Math.random()*CC.length)]+';animation-duration:'+(2.2+Math.random()*1.6)+'s;animation-delay:'+(Math.random()*.4)+'s;transform:rotate('+(Math.random()*360)+'deg)';confettiLayer.appendChild(p);setTimeout(function(){p.remove();},4500);}}
+
+/* ITEMS */
+var ourItems=[];
+function hasItem(n){return ourItems.indexOf(n)!==-1;}
+function addItem(n){if(!hasItem(n))ourItems.push(n);renderItemsBar();}
+var ITEM_ICONS={'goldenTicket':'🎫','platTicket':'🏅'};
+function renderItemsBar(){var slots=document.getElementById('itemsBarSlots');if(!ourItems.length){slots.innerHTML='<div class="items-bar-empty">empty</div>';return;}slots.innerHTML=ourItems.map(function(n){return'<div class="item-icon">'+(ITEM_ICONS[n]||'✨')+'</div>';}).join('');}
+renderItemsBar();
+
+/* KEYPAD + WRONG COUNTER */
+var envelope=document.getElementById('envelope');
+var pinDots=document.getElementById('pinDots');
+var dots=pinDots.querySelectorAll('.dot');
+var codeError=document.getElementById('codeError');
+var entered='';
+var wrongCount=0;
+var clue3Complete=false;
+var wrongHints=['','','','Try harder 🌸','One more...'];
+
+envelope.addEventListener('click',function(){envelope.classList.toggle('open');});
+function refreshDots(){dots.forEach(function(d,i){d.classList.toggle('filled',i<entered.length);});}
+
+function updateWrongDisplay(){
+  var el=document.getElementById('wrongCountDisplay');
+  if(wrongCount>0&&wrongCount<5)el.textContent=wrongHints[wrongCount-1];
+  else el.textContent='';
+}
+
+function checkCode(){
+  var code=entered;entered='';refreshDots();
+  if(code==='7587'){
+    codeError.classList.remove('show');wrongCount=0;updateWrongDisplay();
+    envelope.classList.add('open');document.getElementById('lockLabel').textContent='🌸 unlocked 🌸';
+    openModal('letterModal');
+  } else if(code==='3333'){
+    codeError.classList.remove('show');openModal('clue3Modal');resetQ3();
+  } else if(code==='3450'){
+    codeError.classList.remove('show');
+    if(clue3Complete){openModal('platModal');}
+    else{codeError.textContent='complete Clue 3 first — try code 3333 🌸';codeError.classList.add('show');setTimeout(function(){codeError.classList.remove('show');codeError.textContent='not quite — try again 🌸';},2800);}
+  } else {
+    wrongCount++;updateWrongDisplay();
+    codeError.textContent='not quite — try again 🌸 ('+wrongCount+' wrong)';
+    codeError.classList.add('show');
+    pinDots.classList.add('shake');
+    setTimeout(function(){pinDots.classList.remove('shake');codeError.classList.remove('show');},1800);
+    if(wrongCount>=5){wrongCount=0;updateWrongDisplay();setTimeout(function(){openModal('clue4SecretModal');fireConfetti();},1200);}
+  }
+}
+
+document.getElementById('keypadGrid').addEventListener('click',function(e){
+  var btn=e.target.closest('button[data-key]');if(!btn)return;
+  var key=btn.dataset.key;
+  if(key==='clear'){entered='';refreshDots();}
+  else if(key==='enter'){if(entered.length===4)checkCode();}
+  else if(entered.length<4){entered+=key;refreshDots();if(entered.length===4)setTimeout(checkCode,200);}
+});
+
+/* GOLDEN TICKET */
+var claimBtn=document.getElementById('claimTicketBtn');
+claimBtn.addEventListener('click',function(){fireConfetti();addItem('goldenTicket');claimBtn.classList.add('claimed');claimBtn.querySelector('.ticket-label').textContent='Ticket Claimed!';document.getElementById('ticketClaimedMsg').classList.add('show');});
+
+/* PLATINUM */
+document.getElementById('platClaimBtn').addEventListener('click',function(){
+  fireConfetti();addItem('platTicket');
+  this.classList.add('claimed');document.getElementById('platClaimLabel').textContent='Claimed!';
+  document.getElementById('platClaimedMsg').style.display='block';
+});
+
+/* REDEEM */
+function renderRedeemBox(){
+  var box=document.getElementById('redeemBox');var html='';
+  if(hasItem('platTicket')){html='<div class="ticket-display">🏅</div><p><b>Platinum Ticket</b> — Show this to Jenil to claim your special prize!</p><button class="redeem-btn" id="redeemDoBtn">Redeem Platinum</button><div class="redeem-success" id="redeemSucc">🎉 Redeemed! Show Jenil this screen.</div>';}
+  else if(hasItem('goldenTicket')){html='<div class="ticket-display">🎫</div><p><b>Golden Ticket</b> — Show this to Jenil to claim your prize!</p><button class="redeem-btn" id="redeemDoBtn">Redeem Golden</button><div class="redeem-success" id="redeemSucc">🎉 Redeemed! Show Jenil this screen.</div>';}
+  else{html='<div class="ticket-display">🔒</div><p>No tickets yet. Solve the puzzles to earn one!</p><button class="redeem-btn" disabled>Redeem</button>';}
+  box.innerHTML=html;
+  var rb=document.getElementById('redeemDoBtn');
+  if(rb&&!rb.disabled)rb.addEventListener('click',function(){fireConfetti();document.getElementById('redeemSucc').classList.add('show');rb.disabled=true;rb.textContent='Redeemed ✓';});
+}
+document.getElementById('btnRedeem').addEventListener('click',function(){openModal('redeemScreen');renderRedeemBox();});
+
+/* COUNTER */
+var startDate=new Date(2026,1,25,19,28,0);
+function updateCounter(){var tot=Math.max(0,Math.floor((Date.now()-startDate)/1000));document.getElementById('cDays').textContent=Math.floor(tot/86400);document.getElementById('cHours').textContent=Math.floor((tot%86400)/3600);document.getElementById('cMins').textContent=Math.floor((tot%3600)/60);document.getElementById('cSecs').textContent=tot%60;document.getElementById('cTotalSecs').textContent=tot.toLocaleString();}
+setInterval(function(){if(document.getElementById('counterScreen').classList.contains('active'))updateCounter();},1000);
+document.getElementById('btnCounter').addEventListener('click',function(){openModal('counterScreen');updateCounter();});
+document.getElementById('btnBucket').addEventListener('click',function(){openModal('bucketScreen');});
+
+/* BUCKET LIST */
+var BUCKET_ITEMS=["Say 'I love you' for the first time","Go on a proper first date","Hold hands in public without thinking twice","Have our first deep 3am conversation","Survive our first disagreement and come back closer","Cook a meal together from scratch","Watch the sunrise together","Watch the sunset together","Take a goofy photobooth strip","Slow dance in the kitchen for no reason","Go on a road trip with no real plan","Build a tiny home video diary","Make a shared playlist","Write each other a letter to open 'someday'","Get matching something (bracelets, socks, anything silly)","Go camping together","Watch every movie on each other's comfort list","Learn a recipe from each other's culture","Meet each other's closest friends","Spend a whole rainy day doing nothing but being together","Go to a concert together","Take a spontaneous day trip","Plan and survive a long-distance stretch, if it happens","Celebrate our first anniversary","Adopt a pet together","Move in together","Decorate our first place together","Have a song we both agree on","Survive a road trip with bad weather","Go on a beach holiday together","Go on a snow holiday together","Visit a new country together","Learn a language phrase or two for each other","Take a couples cooking class","Go stargazing somewhere properly dark","Have a lazy Sunday tradition","Build a small savings goal together","Get each other through a hard week","Celebrate a promotion or big achievement together","Support each other through a health scare","Meet each other's extended family","Attend a wedding together as a couple","Plan our own future wedding day, just for fun","Get engaged","Plan the wedding","Get married","Go on a honeymoon","Pick our first family tradition","Buy our first piece of furniture together","Survive our first home renovation argument","Plant something together and watch it grow","Get a second pet","Celebrate five years together","Take a big career risk with the other's support","Travel to a bucket-list destination","Build our dream home, even if small","Have our first child, if we choose to","Pick a name together","Survive the newborn sleepless nights as a team","Watch our child take their first steps","Build family traditions of our own","Celebrate ten years together","Take the kids on a big family trip","Renew our vows somewhere meaningful","Celebrate milestones — promotions, graduations, anything","Grow a garden together","Watch our child's first day of school","Take a couples trip without the kids","Celebrate fifteen years together","Support each other through our parents ageing","Build a tradition that outlives any single year","Celebrate twenty years together","Watch our child grow into an adult","Travel somewhere we always said we would one day","Renovate our home again, calmer this time","Celebrate twenty-five years — a silver anniversary","Become grandparents, if life takes us there","Take long slow walks as our pace changes","Celebrate thirty years together","Look back through old photos and laugh","Write a letter to our younger selves","Celebrate forty years together","Hold hands the same way we did on day one","Tell our grandchildren how we met","Celebrate fifty years — a golden anniversary","Sit on a porch together, still talking","Watch the world change and still choose each other","Celebrate sixty years together","Have a quiet ordinary day that still feels like everything","Look at each other and still feel that first spark","Whisper 'I would choose you again' one more time","Hold each other through the hardest goodbye there is","Know, without doubt, that it was always going to be each other"];
+var bucketChecks=[];
+function renderBucket(){var el=document.getElementById('bucketList');el.innerHTML='';var count=0;BUCKET_ITEMS.forEach(function(txt,i){var done=!!bucketChecks[i];if(done)count++;var li=document.createElement('li');if(done)li.classList.add('done');li.innerHTML='<span class="num">'+(i+1)+'.</span><span class="check" data-i="'+i+'">'+(done?'✓':'')+'</span><span class="txt">'+txt+'</span>';el.appendChild(li);});document.getElementById('bucketProgress').textContent=count+' / '+BUCKET_ITEMS.length+' checked off';el.querySelectorAll('.check').forEach(function(c){c.addEventListener('click',function(){var i=Number(c.dataset.i);bucketChecks[i]=!bucketChecks[i];renderBucket();});});}
+renderBucket();
+
+/* PUZZLE TWO BUTTON */
+document.getElementById('puzzleTwoBtn').addEventListener('click',function(){
+  var btn=this;for(var s=0;s<8;s++){var sp=document.createElement('span');sp.className='sparkle';sp.textContent=['✨','⭐','💫','🌟'][Math.floor(Math.random()*4)];sp.style.cssText='left:'+(30+Math.random()*40)+'%;top:'+(20+Math.random()*60)+'%;animation-delay:'+(Math.random()*.3)+'s';btn.appendChild(sp);setTimeout(function(){sp.remove();},700);}
+  openModal('mazeModal');setTimeout(initMazeGame,100);
+});
+
+/* MAZE */
+var MROWS=21,MCOLS=21,mazeGrid,mitsuPos,monsterPos,mazeGoalPos;
+var mazeCanvas=document.getElementById('mazeCanvas'),mazeCtx=mazeCanvas.getContext('2d');
+var monsterTimer,gameActive=false,CELL=26;
+
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function makeMaze(R,C){
+  var g=[];for(var r=0;r<R;r++){g.push([]);for(var c=0;c<C;c++)g[r].push(1);}
+  var stack=[[1,1]];g[1][1]=0;
+  while(stack.length){var cur=stack[stack.length-1],r=cur[0],c=cur[1];var dirs=shuffle([[0,2],[2,0],[0,-2],[-2,0]]);var moved=false;for(var d=0;d<dirs.length;d++){var nr=r+dirs[d][0],nc=c+dirs[d][1];if(nr>0&&nr<R-1&&nc>0&&nc<C-1&&g[nr][nc]===1){g[r+Math.floor(dirs[d][0]/2)][c+Math.floor(dirs[d][1]/2)]=0;g[nr][nc]=0;stack.push([nr,nc]);moved=true;break;}}if(!moved)stack.pop();}
+  // Braid: remove ~40% of dead ends to guarantee multiple routes to the finish
+  var deadEnds=[];
+  for(var r=1;r<R-1;r++)for(var c=1;c<C-1;c++){if(g[r][c]===0){var open=0;[[0,1],[1,0],[0,-1],[-1,0]].forEach(function(d){if(r+d[0]>0&&r+d[0]<R-1&&c+d[1]>0&&c+d[1]<C-1&&g[r+d[0]][c+d[1]]===0)open++;});if(open===1)deadEnds.push([r,c]);}}
+  shuffle(deadEnds);
+  var n=Math.floor(deadEnds.length*0.4);
+  for(var i=0;i<n;i++){var dr=deadEnds[i][0],dc=deadEnds[i][1];var wdirs=shuffle([[0,1],[1,0],[0,-1],[-1,0]]);for(var d=0;d<wdirs.length;d++){var nr=dr+wdirs[d][0],nc=dc+wdirs[d][1];if(nr>0&&nr<R-1&&nc>0&&nc<C-1&&g[nr][nc]===1){g[nr][nc]=0;break;}}}
+  return g;
+}
+function bfs(g,start,goal){var R=g.length,C=g[0].length,queue=[start.slice()],prev={},vis={};var key=function(r,c){return r+','+c;};vis[key(start[0],start[1])]=true;while(queue.length){var cur=queue.shift(),r=cur[0],c=cur[1];if(r===goal[0]&&c===goal[1]){var path=[[r,c]],k=key(r,c);while(prev[k]){var pk=prev[k],pts=pk.split(',');path.unshift([+pts[0],+pts[1]]);k=pk;}return path;}[[0,1],[1,0],[0,-1],[-1,0]].forEach(function(m){var nr=r+m[0],nc=c+m[1],nk=key(nr,nc);if(nr>=0&&nr<R&&nc>=0&&nc<C&&g[nr][nc]===0&&!vis[nk]){vis[nk]=true;prev[nk]=key(r,c);queue.push([nr,nc]);}});}return null;}
+
+function initMazeGame(){
+  var card=document.querySelector('#mazeModal .modal-card');
+  var avail=Math.min(card?card.clientWidth-48:580,window.innerHeight*.52,560);
+  CELL=Math.max(18,Math.floor(avail/MCOLS));
+  mazeCanvas.width=CELL*MCOLS;mazeCanvas.height=CELL*MROWS;
+  mazeGrid=makeMaze(MROWS,MCOLS);mitsuPos=[1,1];mazeGoalPos=[MROWS-2,MCOLS-2];monsterPos=[1,MCOLS-2];
+  mazeGrid[1][MCOLS-2]=0;mazeGrid[MROWS-2][MCOLS-2]=0;
+  document.getElementById('maze-game-stage').style.display='block';
+  document.getElementById('maze-win-stage').style.display='none';
+  document.getElementById('mazeTitleH3').textContent='🐱 Guide Mitsu Through the Maze!';
+  setMazeStatus('Guide Mitsu 🐱 to the 🎀 — dodge the monster 👾!','');
+  monsterLastDir=null;gameActive=true;drawMaze();
+  if(monsterTimer)clearInterval(monsterTimer);
+  monsterTimer=setInterval(moveMonster,420);
+}
+function drawMaze(){
+  mazeCtx.clearRect(0,0,mazeCanvas.width,mazeCanvas.height);mazeCtx.fillStyle='#0d0a0c';mazeCtx.fillRect(0,0,mazeCanvas.width,mazeCanvas.height);
+  for(var r=0;r<MROWS;r++)for(var c=0;c<MCOLS;c++){var x=c*CELL,y=r*CELL;mazeCtx.fillStyle=mazeGrid[r][c]===1?'#1a0a10':'#2a1420';mazeCtx.fillRect(x,y,CELL,CELL);}
+  var gx=mazeGoalPos[1]*CELL+CELL/2,gy=mazeGoalPos[0]*CELL+CELL/2;
+  var gg=mazeCtx.createRadialGradient(gx,gy,0,gx,gy,CELL*1.5);gg.addColorStop(0,'rgba(202,161,75,.5)');gg.addColorStop(1,'rgba(202,161,75,0)');mazeCtx.fillStyle=gg;mazeCtx.fillRect(gx-CELL*1.5,gy-CELL*1.5,CELL*3,CELL*3);
+  var mx=monsterPos[1]*CELL+CELL/2,my=monsterPos[0]*CELL+CELL/2;
+  var mg=mazeCtx.createRadialGradient(mx,my,0,mx,my,CELL*2);mg.addColorStop(0,'rgba(255,40,40,.5)');mg.addColorStop(1,'rgba(255,40,40,0)');mazeCtx.fillStyle=mg;mazeCtx.fillRect(mx-CELL*2,my-CELL*2,CELL*4,CELL*4);
+  mazeCtx.font=Math.floor(CELL*.78)+'px serif';mazeCtx.textAlign='center';mazeCtx.textBaseline='middle';
+  mazeCtx.fillText('🎀',gx,gy);mazeCtx.fillText('👾',mx,my);mazeCtx.fillText('🐱',mitsuPos[1]*CELL+CELL/2,mitsuPos[0]*CELL+CELL/2);
+}
+function setMazeStatus(msg,cls){var el=document.getElementById('mazeStatus');el.textContent=msg;el.className='maze-status'+(cls?' '+cls:'');}
+function moveMitsu(dr,dc){if(!gameActive)return;var nr=mitsuPos[0]+dr,nc=mitsuPos[1]+dc;if(nr<0||nr>=MROWS||nc<0||nc>=MCOLS||mazeGrid[nr][nc]===1)return;mitsuPos=[nr,nc];drawMaze();if(nr===monsterPos[0]&&nc===monsterPos[1]){caughtByMonster();return;}if(nr===mazeGoalPos[0]&&nc===mazeGoalPos[1])mazeWin();}
+var monsterLastDir=null;
+function moveMonster(){
+  if(!gameActive)return;
+  var allDirs=[[0,1],[1,0],[0,-1],[-1,0]];
+  var fwd=[],rev=[];
+  allDirs.forEach(function(d){
+    var nr=monsterPos[0]+d[0],nc=monsterPos[1]+d[1];
+    if(nr>=0&&nr<MROWS&&nc>=0&&nc<MCOLS&&mazeGrid[nr][nc]===0){
+      if(monsterLastDir&&d[0]===-monsterLastDir[0]&&d[1]===-monsterLastDir[1])rev.push(d);
+      else fwd.push(d);
+    }
+  });
+  var choices=fwd.length>0?fwd:rev;
+  if(!choices.length)return;
+  shuffle(choices);
+  monsterLastDir=choices[0];
+  monsterPos=[monsterPos[0]+choices[0][0],monsterPos[1]+choices[0][1]];
+  drawMaze();
+  if(monsterPos[0]===mitsuPos[0]&&monsterPos[1]===mitsuPos[1])caughtByMonster();
+}
+function caughtByMonster(){gameActive=false;clearInterval(monsterTimer);setMazeStatus('👾 The monster got Mitsu! Starting over...','bad');setTimeout(initMazeGame,1600);}
+function mazeWin(){gameActive=false;clearInterval(monsterTimer);fireConfetti();setTimeout(function(){document.getElementById('maze-game-stage').style.display='none';document.getElementById('maze-win-stage').style.display='block';document.getElementById('mazeTitleH3').textContent='🎉 Mitsu Is Safe!';},600);}
+document.querySelectorAll('.maze-dpad button').forEach(function(btn){btn.addEventListener('click',function(){var d=btn.dataset.dir;if(d==='up')moveMitsu(-1,0);else if(d==='down')moveMitsu(1,0);else if(d==='left')moveMitsu(0,-1);else if(d==='right')moveMitsu(0,1);});});
+document.addEventListener('keydown',function(e){if(!document.getElementById('mazeModal').classList.contains('active')||!gameActive)return;if(e.key==='ArrowUp'){e.preventDefault();moveMitsu(-1,0);}else if(e.key==='ArrowDown'){e.preventDefault();moveMitsu(1,0);}else if(e.key==='ArrowLeft'){e.preventDefault();moveMitsu(0,-1);}else if(e.key==='ArrowRight'){e.preventDefault();moveMitsu(0,1);}});
+document.getElementById('mazeCloseBtn').addEventListener('click',function(){gameActive=false;if(monsterTimer)clearInterval(monsterTimer);});
+document.getElementById('clue2OpenBtn').addEventListener('click',function(){closeModal('mazeModal');openModal('clue2Modal');});
+
+/* GENERIC TASK TIMER */
+function startTaskTimer(totalSecs,ringId,countId,startBtnId,onDone){
+  var btn=document.getElementById(startBtnId);btn.disabled=true;btn.textContent='Counting...';
+  var circle=document.getElementById(ringId),countEl=document.getElementById(countId);
+  var circumference=263.9,elapsed=0,total=totalSecs*1000,interval=80;
+  var timer=setInterval(function(){
+    elapsed+=interval;
+    var progress=Math.min(1,elapsed/total);
+    circle.style.strokeDashoffset=progress*circumference;
+    var rem=Math.max(0,Math.ceil((total-elapsed)/1000));
+    countEl.textContent=totalSecs>=60?(Math.floor(rem/60)+':'+(rem%60<10?'0':'')+(rem%60)):rem;
+    if(elapsed>=total){clearInterval(timer);countEl.textContent='✓';circle.style.stroke='#6dbb8a';btn.textContent='Done! ✅';if(onDone)onDone();}
+  },interval);
+}
+
+/* CLUE 2 TASKS */
+var taskTimerDone=[false,false,false,false];
+
+function completeTask(n){
+  var card=document.getElementById('t'+(n+1)+'Card');
+  var done=document.getElementById('t'+(n+1)+'Done');
+  var btn=document.getElementById('t'+(n+1)+'Btn');
+  card.classList.add('completed');btn.disabled=true;btn.textContent='Sent ✅';done.style.display='block';
+  if(n+1<4){setTimeout(function(){unlockTask(n+1);},400);}
+  else{setTimeout(function(){var c=document.getElementById('clue2Complete');c.style.display='block';fireConfetti();},500);}
+}
+function unlockTask(n){
+  var card=document.getElementById('t'+(n+1)+'Card');var lock=document.getElementById('t'+(n+1)+'Lock');
+  card.classList.remove('locked');if(lock)lock.style.display='none';
+  // enable timer button
+  var timerBtn=document.getElementById('t'+(n+1)+'TimerBtn');if(timerBtn)timerBtn.disabled=false;
+  // enable pushup tap if task 4
+  if(n===3)document.getElementById('pushupTapBtn').disabled=false;
+}
+
+// Task 1 — Dance (60s)
+document.getElementById('t1TimerBtn').addEventListener('click',function(){
+  startTaskTimer(60,'t1Ring','t1Count','t1TimerBtn',function(){taskTimerDone[0]=true;document.getElementById('t1Btn').disabled=false;});
+});
+document.getElementById('t1Btn').addEventListener('click',function(){completeTask(0);});
+
+// Task 2 — Plank (90s)
+document.getElementById('t2TimerBtn').addEventListener('click',function(){
+  startTaskTimer(90,'t2Ring','t2Count','t2TimerBtn',function(){taskTimerDone[1]=true;document.getElementById('t2Btn').disabled=false;});
+});
+document.getElementById('t2Btn').addEventListener('click',function(){completeTask(1);});
+
+// Task 3 — Handstand (4s)
+document.getElementById('t3TimerBtn').addEventListener('click',function(){
+  startTaskTimer(4,'t3Ring','t3Count','t3TimerBtn',function(){taskTimerDone[2]=true;document.getElementById('t3Btn').disabled=false;});
+});
+document.getElementById('t3Btn').addEventListener('click',function(){completeTask(2);});
+
+// Task 4 — Pushups (15 reps)
+var pushupCount=0;
+document.getElementById('pushupTapBtn').addEventListener('click',function(){
+  if(pushupCount>=15)return;
+  pushupCount++;
+  document.getElementById('pushupNum').textContent=pushupCount;
+  document.getElementById('pushupBarFill').style.width=(pushupCount/15*100)+'%';
+  if(pushupCount>=15){this.disabled=true;this.textContent='15 Done! ✅';document.getElementById('t4Btn').disabled=false;}
+});
+document.getElementById('t4Btn').addEventListener('click',function(){completeTask(3);});
+
+/* CLUE 3 QUIZ */
+var Q3=[
+  {q:"What is Jenil's favourite Beyblade?",opts:["Dranzer","Dragoon","Storm Pegasus","Geist Fafnir"],ans:3},
+  {q:"What is Jenil's favourite fictional animal?",opts:["Charizard","Toothless","Meltdown Shark","Blue-Eyes White Dragon"],ans:2},
+  {q:"What is Jenil's favourite superhero?",opts:["Black Panther","Miles Morales","Iron Man","Indian Spiderman"],ans:3},
+  {q:"What city was Jenil born in?",opts:["Mumbai","Surat","Gujarat","Porbandar"],ans:3},
+  {q:"What day of the week was Jenil born?",opts:["Tuesday","Wednesday","Monday","Friday"],ans:2},
+  {q:"What is Jenil's number plate?",opts:["1ERI 421","2ERI 549","1ERI 594","1ERI 549"],ans:3},
+  {q:"How long is Jenil's dih? 😏",opts:["5 inch","6 inch","7 inch","8 inch"],ans:2},
+  {q:"Can Jenil and Aashna have kids?",opts:["No","Maybe","Ask me later","Yes"],ans:3},
+  {q:"What is Jenil's maths teacher's name?",opts:["Mr Smith","Mr Khan","Mr Safa","Mr Patel"],ans:2},
+  {q:"What is Jenil's all-time favourite song?",opts:["Blinding Lights","As It Was","God on Me","Levitating"],ans:2},
+  {q:"What is Jenil's favourite colour?",opts:["Sky Blue","Blood Red","Forest Green","Jet Black"],ans:1},
+  {q:"Which episode of Attack on Titan is Jenil's favourite?",opts:["Episode 1","Episode 12","Episode 88","Episode 67"],ans:3},
+  {q:"What is Jenil's favourite day of the week?",opts:["Friday","Sunday","Thursday","Monday"],ans:2},
+  {q:"What is Jenil's favourite food?",opts:["Sushi","Pizza","Tacos","Wattle Grove Meat Box"],ans:3},
+  {q:"How much can Jenil bench press?",opts:["40 kg","50 kg","60 kg","80 kg"],ans:2}
+];
+var q3Index=0,q3Score=0,q3Wrong=[],q3Selected=false;
+
+function resetQ3(){q3Index=0;q3Score=0;q3Wrong=[];q3Selected=false;document.getElementById('q3-intro').style.display='block';document.getElementById('q3-question').style.display='none';document.getElementById('q3-results').style.display='none';}
+
+document.getElementById('q3StartBtn').addEventListener('click',function(){document.getElementById('q3-intro').style.display='none';document.getElementById('q3-question').style.display='block';showQ3Q();});
+
+function showQ3Q(){
+  q3Selected=false;var q=Q3[q3Index];
+  document.getElementById('q3Num').textContent=q3Index+1;
+  document.getElementById('q3ScoreLabel').textContent=q3Score+' correct';
+  document.getElementById('q3BarFill').style.width=(q3Index/Q3.length*100)+'%';
+  document.getElementById('q3QText').textContent=q.q;
+  document.getElementById('q3Feedback').textContent='';document.getElementById('q3Feedback').className='q3-feedback';
+  document.getElementById('q3NextBtn').style.display='none';
+  var opts=document.getElementById('q3Opts');opts.innerHTML='';
+  q.opts.forEach(function(opt,i){
+    var btn=document.createElement('button');btn.className='q3-opt';btn.type='button';btn.textContent=opt;
+    btn.addEventListener('click',function(){
+      if(q3Selected)return;q3Selected=true;var correct=i===q.ans;
+      btn.classList.add(correct?'correct':'wrong');
+      opts.querySelectorAll('.q3-opt')[q.ans].classList.add('correct');
+      opts.querySelectorAll('.q3-opt').forEach(function(b){b.disabled=true;});
+      if(correct)q3Score++;else q3Wrong.push(q3Index);
+      var fb=document.getElementById('q3Feedback');fb.textContent=correct?'✓ Correct!':'✗ The answer was: '+q.opts[q.ans];fb.className='q3-feedback '+(correct?'good':'bad');
+      document.getElementById('q3NextBtn').style.display='block';
+    });
+    opts.appendChild(btn);
+  });
+}
+
+document.getElementById('q3NextBtn').addEventListener('click',function(){q3Index++;if(q3Index>=Q3.length)showQ3Results();else showQ3Q();});
+
+function showQ3Results(){
+  document.getElementById('q3-question').style.display='none';
+  var res=document.getElementById('q3-results');res.style.display='block';
+  if(q3Score===Q3.length){
+    clue3Complete=true;fireConfetti();
+    res.innerHTML='<div class="q3-results"><span class="q3-score-big">15 / 15</span><p style="font-family:\'Cormorant Garamond\',serif;font-style:italic;color:var(--cream);font-size:1.1rem;">Perfect score! You really do know your Jenil. 🌸</p><div class="q3-code-reveal"><p style="font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;color:var(--lav);margin-bottom:.5rem;">✨ Digit 3 of your Platinum Ticket code ✨</p><span class="q3-code">5</span><p style="font-size:.95rem;color:var(--lav);margin-top:.8rem;">You now have: <b style="color:var(--cream);">3 4 5 _</b><br>One digit left — find Clue 4 to unlock the final number. 👀</p></div></div>';
+  } else {
+    var wHtml='<div class="q3-wrong-list">';
+    q3Wrong.forEach(function(i){wHtml+='<div class="q3-wrong-item">Q'+(i+1)+': '+Q3[i].q+'<br><b>Correct: '+Q3[i].opts[Q3[i].ans]+'</b></div>';});
+    wHtml+='</div>';
+    res.innerHTML='<div class="q3-results"><span class="q3-score-big">'+q3Score+' / '+Q3.length+'</span><p style="font-family:\'Cormorant Garamond\',serif;font-style:italic;color:var(--lav);">Need all 15 — here is what you got wrong:</p>'+wHtml+'<button class="q3-retry-btn" id="q3RetryBtn" type="button">Try Again →</button></div>';
+    document.getElementById('q3RetryBtn').addEventListener('click',function(){q3Index=0;q3Score=0;q3Wrong=[];document.getElementById('q3-results').style.display='none';document.getElementById('q3-question').style.display='block';showQ3Q();});
+  }
+}
+</script>
+</body>
+</html>
